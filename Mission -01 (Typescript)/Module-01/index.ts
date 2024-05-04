@@ -1,2 +1,2 @@
-let course = 'next level';
+let course : string = 'next level';
 console.log(course);
