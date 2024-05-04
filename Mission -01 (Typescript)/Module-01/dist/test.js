@@ -1,3 +1,3 @@
 "use strict";
-var test = "testing es version";
+const test = "testing es version";
 console.log(test);
