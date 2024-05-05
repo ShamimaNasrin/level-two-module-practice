@@ -22,3 +22,12 @@ let anyValue;
 anyValue = undefined;
 anyValue = 123;
 anyValue = true;
+
+//non primitive types
+
+//array
+let friends: string[] = ['Monica', 'Ross']; //here we can only push string values
+let roll: number[] = [10, 29]; //similarly here we can only push number values
+
+//tuple
+let studentInfo: [string, number, number] = ['Student one', 10, 170988909];
