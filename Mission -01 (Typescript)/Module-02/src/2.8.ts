@@ -1,9 +1,11 @@
 {
     // promise
 
-    const createPromise = (): Promise<{something : string}> => {
-        return new Promise<{something : string}>((resolve, reject) => {
-            const data: {something : string} = {something : 'student data'};
+    type Something = { something: string };
+
+    const createPromise = (): Promise<Something> => {
+        return new Promise<Something>((resolve, reject) => {
+            const data: Something = { something: 'student data' };
             if (data) {
                 resolve(data);
             } else {
@@ -13,8 +15,8 @@
     };
 
     // calling create promise function
-    const showData = async (): Promise<{something : string}> => {
-        const data: {something : string} = await createPromise();
+    const showData = async (): Promise<Something> => {
+        const data: Something = await createPromise();
         console.log(data);
         return data;
     };
