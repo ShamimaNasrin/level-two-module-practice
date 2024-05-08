@@ -29,9 +29,10 @@
 
     const car = {
         model: "Toyota 100",
-        year: 200,
+        year: 2001,
     };
 
     const result1 = getPropertyValue(car, "year");
+    console.log("result1: ", result1);
 
 }
