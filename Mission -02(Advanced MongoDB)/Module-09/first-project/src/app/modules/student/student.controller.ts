@@ -10,7 +10,7 @@ const createStudent = async (req: Request, res: Response) => {
     // validate data with Joi schema
     const { error, value } = studentValidationSchema.validate(studentData);
 
-    const result = await StudentServices.createStudentIntoDB(studentData);
+    const result = await StudentServices.createStudentIntoDB(value); // this value is the actual validate data so we should send this validated data to the db
 
     if (error) {
       res.status(500).json({
