@@ -14,14 +14,14 @@ const userNameSchema = new Schema<UserName>({
     required: [true, 'First Name is required'], // if the firstName is not specified it will throw this error message 'First Name is required'
     trim: true,
     maxlength: [20, 'Name can not be more than 20 characters'],
-    validate: {
-      // if the user provide "shaMiMA" this will throw this error message it has to be "Shamima"
-      validator: function (value: string) {
-        const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1); //Shamima
-        return firstNameStr === value;
-      },
-      message: '{VALUE} is not in capitalize format',
-    },
+    // validate: {
+    //   // if the user provide "shaMiMA" this will throw this error message it has to be "Shamima"
+    //   validator: function (value: string) {
+    //     const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1); //Shamima
+    //     return firstNameStr === value;
+    //   },
+    //   message: '{VALUE} is not in capitalize format',
+    // },
   },
   middleName: {
     type: String,
@@ -32,10 +32,10 @@ const userNameSchema = new Schema<UserName>({
     trim: true,
     required: [true, 'Last Name is required'],
     maxlength: [20, 'Name can not be more than 20 characters'],
-    validate: {
-      validator: (value: string) => validator.isAlpha(value),
-      message: '{VALUE} is not valid',
-    },
+    // validate: {
+    //   validator: (value: string) => validator.isAlpha(value),
+    //   message: '{VALUE} is not valid',
+    // },
   },
 });
 
@@ -112,10 +112,10 @@ const studentSchema = new Schema<Student>({
     type: String,
     required: [true, 'Email is required'],
     unique: true,
-    validate: {
-      validator: (value: string) => validator.isEmail(value),
-      message: '{VALUE} is not a valid email',
-    },
+    // validate: {
+    //   validator: (value: string) => validator.isEmail(value),
+    //   message: '{VALUE} is not a valid email',
+    // },
   },
   contactNo: {
     type: String,
@@ -125,7 +125,7 @@ const studentSchema = new Schema<Student>({
     type: String,
     required: [true, 'Emergency contact number is required'],
   },
-  bloogGroup: {
+  bloodGroup: {
     type: String,
     enum: {
       values: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
