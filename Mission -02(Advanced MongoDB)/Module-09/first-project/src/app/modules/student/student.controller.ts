@@ -14,7 +14,12 @@ const createStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    res.status(500).json({
+      success: false,
+      message: 'something went wrong',
+      error: err, // schema te define kora error gula dekhabe
+    });
   }
 };
 
@@ -28,7 +33,12 @@ const getAllStudents = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    res.status(500).json({
+      success: false,
+      message: 'something went wrong',
+      error: err,
+    });
   }
 };
 
@@ -44,7 +54,12 @@ const getSingleStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    console.log(err);
+    // console.log(err);
+    res.status(500).json({
+      success: false,
+      message: 'something went wrong',
+      error: err,
+    });
   }
 };
 
