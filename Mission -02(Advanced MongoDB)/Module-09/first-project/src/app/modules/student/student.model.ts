@@ -1,6 +1,7 @@
 import { Schema, model, connect } from 'mongoose';
 import validator from 'validator';
-
+import config from '../../config';
+import bcrypt from 'bcrypt';
 import {
   Guardian,
   LocalGuardian,
@@ -94,6 +95,11 @@ const studentSchema = new Schema<Student>({
     required: [true, 'ID is required'],
     unique: true,
   }, // we used unique so that we can't store duplicalte id in the db
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    maxlength: [20, 'Password can not be more than 20 characters'],
+  },
   name: {
     type: userNameSchema,
     required: [true, 'Name is required'],
@@ -157,6 +163,26 @@ const studentSchema = new Schema<Student>({
     },
     default: 'active', // we can set a default value if there is no isActive value provided by the client side
   },
+});
+
+// there are 3 types of mongoose middlewares
+// 1. Document middleware: pre save middleware/ hook : will work on create(), save()
+studentSchema.pre('save', async function (next) {
+  // console.log(this, 'pre hook : we will save  data');
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this; // doc
+  // hashing password and save into DB
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
+
+// post save middleware / hook
+studentSchema.post('save', function (doc, next) {
+  doc.password = '';
+  next();
 });
 
 // step 3: create model
