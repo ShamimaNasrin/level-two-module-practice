@@ -195,5 +195,17 @@ studentSchema.pre('find', function (next) {
   next();
 });
 
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+//3. aggregate Middleware
+// [ {$match: { isDeleted : {  $ne: : true}}}   ,{ '$match': { id: '123456' } } ]
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
+
 // step 3: create model
 export const StudentModel = model<Student>('Student', studentSchema); // here we need to pass 2 parameters 1. name( it will be the name of the collection in mongDB), 2. the created schema
