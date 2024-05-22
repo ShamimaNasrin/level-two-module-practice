@@ -163,6 +163,10 @@ const studentSchema = new Schema<Student>({
     },
     default: 'active', // we can set a default value if there is no isActive value provided by the client side
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // there are 3 types of mongoose middlewares
@@ -182,6 +186,12 @@ studentSchema.pre('save', async function (next) {
 // post save middleware / hook
 studentSchema.post('save', function (doc, next) {
   doc.password = '';
+  next();
+});
+
+//2. Query Middleware
+studentSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
   next();
 });
 
