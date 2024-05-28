@@ -1,11 +1,4 @@
 import { StudentModel } from './student.model';
-import { Student } from './student.interface';
-
-// "StudentModel" model er opor query korbo
-const createStudentIntoDB = async (student: Student) => {
-  const result = await StudentModel.create(student);
-  return result;
-};
 
 const getAllStudentsFromDB = async () => {
   const result = await StudentModel.find();
@@ -28,7 +21,6 @@ const deleteStudentFromDB = async (id: string) => {
 };
 
 export const StudentServices = {
-  createStudentIntoDB,
   getAllStudentsFromDB,
   getSingleStudentFromDB,
   deleteStudentFromDB,
