@@ -83,6 +83,12 @@ const studentSchema = new Schema<TStudent>(
       required: [true, 'ID is required'],
       unique: true,
     }, // we used unique so that we can't store duplicalte id in the db
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'User id is required'],
+      unique: true,
+      ref: 'User', // for referencing the _id from the User collection
+    },
     password: {
       type: String,
       required: [true, 'Password is required'],
