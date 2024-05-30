@@ -1,6 +1,4 @@
 import { Schema, model } from 'mongoose';
-import config from '../../config';
-import bcrypt from 'bcrypt';
 import {
   TGuardian,
   TLocalGuardian,
@@ -89,11 +87,6 @@ const studentSchema = new Schema<TStudent>(
       unique: true,
       ref: 'User', // for referencing the _id from the User collection
     },
-    password: {
-      type: String,
-      required: [true, 'Password is required'],
-      maxlength: [20, 'Password can not be more than 20 characters'],
-    },
     name: {
       type: userNameSchema,
       required: [true, 'Name is required'],
@@ -160,26 +153,6 @@ const studentSchema = new Schema<TStudent>(
 // virtual : we can get a temporary value which doesn't exist in the actual data
 studentSchema.virtual('fullName').get(function () {
   return this.name.firstName + this.name.middleName + this.name.lastName;
-});
-
-// there are 3 types of mongoose middlewares
-// 1. Document middleware: pre save middleware/ hook : will work on create(), save()
-studentSchema.pre('save', async function (next) {
-  // console.log(this, 'pre hook : we will save  data');
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this; // doc
-  // hashing password and save into DB
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
-});
-
-// post save middleware / hook
-studentSchema.post('save', function (doc, next) {
-  doc.password = '';
-  next();
 });
 
 //2. Query Middleware
