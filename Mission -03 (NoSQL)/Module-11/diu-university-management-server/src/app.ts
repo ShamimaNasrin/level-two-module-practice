@@ -3,6 +3,7 @@ import cors from 'cors';
 import { StudentRoutes } from './app/modules/student/student.route';
 import { UserRoutes } from './app/modules/user/user.route';
 import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
 const app: Application = express();
 // const port = 3000
 
@@ -21,6 +22,10 @@ const getAController = (req: Request, res: Response) => {
 
 app.get('/', getAController);
 
+// Global Error Handler middlewares
 app.use(globalErrorHandler);
+
+//Not Found
+app.use(notFound);
 
 export default app;
