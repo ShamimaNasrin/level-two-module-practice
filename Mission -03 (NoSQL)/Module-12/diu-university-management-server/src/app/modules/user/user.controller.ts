@@ -1,4 +1,3 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { UserServices } from './user.service';
 import sendResponse from '../../utils/sendResponse';
 import httpStatus from 'http-status';
@@ -7,9 +6,6 @@ import catchAsync from '../../utils/catchAsync';
 const createStudent = catchAsync(async (req, res) => {
   // try {
   const { password, student: studentData } = req.body;
-
-  // data validation with zod
-  // const zodParsedData = studentValidationSchema.parse(studentData);
 
   const result = await UserServices.createStudentIntoDB(password, studentData);
 
