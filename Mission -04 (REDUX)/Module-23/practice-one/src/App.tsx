@@ -1,4 +1,5 @@
-import UserWithUseState from "./components/UserWithUseState";
+import UserWithUseReducer from "./components/UserWithUseReducer";
+// import UserWithUseState from "./components/UserWithUseState";
 
 function App() {
   return (
@@ -6,7 +7,8 @@ function App() {
       <div>
         {" "}
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        <UserWithUseState></UserWithUseState>
+        {/* <UserWithUseState></UserWithUseState> */}
+        <UserWithUseReducer></UserWithUseReducer>
       </div>
     </>
   );
