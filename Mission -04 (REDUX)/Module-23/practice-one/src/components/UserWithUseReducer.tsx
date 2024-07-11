@@ -1,26 +1,46 @@
-import React, { useReducer } from "react";
+import React, { ChangeEvent, useReducer } from "react";
+
+type TAction = {
+  type: string;
+  payload: string;
+};
 const initialState = {
   name: "",
   age: "",
-  hobbies: [],
+  hobbies: [] as string[],
 };
 
-const reducer = (currentState, action) => {
+const reducer = (currentState: typeof initialState, action: TAction) => {
   switch (action.type) {
     case "addName":
-      return { ...currentState, name: "myname" };
+      return { ...currentState, name: action.payload };
+    case "addAge":
+      return { ...currentState, age: action.payload };
+    case "addHobby":
+      return {
+        ...currentState,
+        hobbies: [...currentState.hobbies, action.payload],
+      };
     default:
-      break;
+      return currentState;
   }
 };
 
 const UserWithUseReducer = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(state);
+  };
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
-          onChange={(e) => dispatch({ type: e.target.value })}
+          onChange={(e) =>
+            dispatch({ type: "addName", payload: e.target.value })
+          }
           className="border border-purple-300 m-10"
           type="text"
           name="name"
@@ -28,7 +48,9 @@ const UserWithUseReducer = () => {
           placeholder="name"
         />
         <input
-          onChange={(e) => dispatch({ type: e.target.value })}
+          onChange={(e) =>
+            dispatch({ type: "addAge", payload: e.target.value })
+          }
           className="border border-purple-300 m-10"
           type="number"
           name="age"
@@ -37,7 +59,7 @@ const UserWithUseReducer = () => {
         />
         <input
           onBlur={(e) =>
-            setUser({ ...user, hobbies: [...user.hobbies, e.target.value] })
+            dispatch({ type: "addHobby", payload: e.target.value })
           }
           className="border border-purple-300 m-10"
           type="text"
@@ -45,6 +67,10 @@ const UserWithUseReducer = () => {
           id="hobbies"
           placeholder="hobby"
         />
+
+        <button className="border py-1 px-2 bg-purple-300" type="submit">
+          submit{" "}
+        </button>
       </form>
     </>
   );
