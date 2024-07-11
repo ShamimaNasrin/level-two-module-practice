@@ -1,16 +1,17 @@
-import UserWithUseReducer from "./components/UserWithUseReducer";
+import ToDoForm from "./components/ToDoForm";
+import TodoProvider from "./context/TodoProvider";
+// import UserWithUseReducer from "./components/UserWithUseReducer";
 // import UserWithUseState from "./components/UserWithUseState";
 
 function App() {
   return (
-    <>
+    <TodoProvider>
       <div>
-        {" "}
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
         {/* <UserWithUseState></UserWithUseState> */}
-        <UserWithUseReducer></UserWithUseReducer>
+        {/* <UserWithUseReducer></UserWithUseReducer> */}
+        <ToDoForm></ToDoForm>
       </div>
-    </>
+    </TodoProvider>
   );
 }
 
