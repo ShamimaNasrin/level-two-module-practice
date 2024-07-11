@@ -1,14 +1,41 @@
-import React, { ReactNode, createContext } from "react";
+import React, { ReactNode, createContext, useReducer } from "react";
 
-export const TodoContext = createContext(undefined); // use undefined to avoid ts warning
+export const TodoContext = createContext<
+  { state: TTodo[]; dispatch: React.Dispatch<TAction> } | undefined
+>(undefined); // use undefined to avoid ts warning
+
+type TTodo = {
+  id: string;
+  title: string;
+  isComplete: boolean;
+};
+
+type TAction = {
+  type: string;
+  payload: TTodo;
+};
+
+const initialState: TTodo[] = [];
+
+const reducer = (currentState: TTodo[], action: TAction) => {
+  switch (action.type) {
+    case "addTodo":
+      return [...currentState, action.payload];
+
+    default:
+      return currentState;
+  }
+};
 
 type TodoProviderProps = {
   children: ReactNode;
 };
 
 const TodoProvider = ({ children }: TodoProviderProps) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const values = {
-    todoTilte: "This is a Todo title!!",
+    state,
+    dispatch,
   };
   return <TodoContext.Provider value={values}>{children}</TodoContext.Provider>;
 };
