@@ -12,7 +12,7 @@ type TTodo = {
 
 type TAction = {
   type: string;
-  payload: TTodo;
+  payload: TTodo | string;
 };
 
 const initialState: TTodo[] = [];
@@ -21,7 +21,12 @@ const reducer = (currentState: TTodo[], action: TAction) => {
   switch (action.type) {
     case "addTodo":
       return [...currentState, action.payload];
-
+    case "taskComplete":
+      return currentState.map((item: TTodo) =>
+        item.id === action.payload
+          ? { ...item, isComplete: !item.isComplete }
+          : item
+      );
     default:
       return currentState;
   }
