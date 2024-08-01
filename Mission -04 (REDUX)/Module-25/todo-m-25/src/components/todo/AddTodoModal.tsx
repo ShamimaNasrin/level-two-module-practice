@@ -23,10 +23,14 @@ const AddTodoModal = () => {
     e.preventDefault();
     // console.log(task);
     // console.log(description);
+
+    const randomStr = Math.random().toString(36).substring(2, 9);
     const taskDetails = {
+      id: randomStr,
       title: task,
       description,
     };
+    // console.log(taskDetails);
 
     dispatch(addTodo(taskDetails));
   };

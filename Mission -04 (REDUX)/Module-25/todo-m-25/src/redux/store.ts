@@ -3,7 +3,7 @@ import todoReducer from "./features/todoSlice";
 
 export const store = configureStore({
   reducer: {
-    todos: todoReducer,
+    todoList: todoReducer,
   },
   // devTools: false, // disable redux dev tool for production
 });
