@@ -11,15 +11,24 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { FormEvent, useState } from "react";
+import { useAppDispatch } from "@/redux/hook";
+import { addTodo } from "@/redux/features/todoSlice";
 
 const AddTodoModal = () => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
+  const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(task);
-    console.log(description);
+    // console.log(task);
+    // console.log(description);
+    const taskDetails = {
+      title: task,
+      description,
+    };
+
+    dispatch(addTodo(taskDetails));
   };
   return (
     <Dialog>
