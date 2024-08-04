@@ -11,17 +11,30 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { FormEvent, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useAddTodosMutation } from "@/redux/api/api";
 // import { useAppDispatch } from "@/redux/hook";
 // import { addTodo } from "@/redux/features/todoSlice";
 
 const AddTodoModal = () => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("");
 
   // For Local State management
   // const dispatch = useAppDispatch();
 
   // For Server management
+  const [addTodo, { data, isLoading, isError, isSuccess }] =
+    useAddTodosMutation();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -30,13 +43,20 @@ const AddTodoModal = () => {
 
     // const randomStr = Math.random().toString(36).substring(2, 9);
     const taskDetails = {
-      // id: randomStr,
+      // id: randomStr, // for local state management
       title: task,
       description,
+      isCompleted: false,
+      priority,
     };
 
     // For Local State management
     // dispatch(addTodo(taskDetails));
+
+    console.log("inside modal:", taskDetails);
+
+    // For Server management
+    addTodo(taskDetails);
   };
   return (
     <Dialog>
@@ -71,6 +91,22 @@ const AddTodoModal = () => {
                 id="Description"
                 className="col-span-3"
               />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right">Priority</Label>
+              <Select onValueChange={(value) => setPriority(value)}>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="select a fruit" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Priority</SelectLabel>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
