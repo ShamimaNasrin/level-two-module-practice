@@ -53,8 +53,6 @@ const AddTodoModal = () => {
     // For Local State management
     // dispatch(addTodo(taskDetails));
 
-    console.log("inside modal:", taskDetails);
-
     // For Server management
     addTodo(taskDetails);
   };
