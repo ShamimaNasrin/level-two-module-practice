@@ -9,6 +9,7 @@ const TodoContainer = () => {
   // const { todos } = useAppSelector((state) => state.todoList);
   // from local server
   const { data: todos, isLoading, isError } = useGetTodosQuery(undefined);
+  // const { data: todos, isLoading, isError } = useGetTodosQuery(undefined, { pollingInterval: 10000 }); // handle cache loading way 1
 
   if (isLoading) {
     return <p>loading...</p>;
