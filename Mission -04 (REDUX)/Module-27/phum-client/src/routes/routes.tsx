@@ -4,9 +4,7 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import AdminDashboard from "../pages/admin/AdminDashboard";
-import CreateStudent from "../pages/admin/CreateStudent";
-import AdminLayout from "../components/layout/AdminLayout";
+import { adminPaths } from "./admin.routes";
 
 const router = createBrowserRouter([
   {
@@ -27,20 +25,17 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <App />,
     // element: <AdminLayout />, // testing
-    children: [
-      //   {
-      //     index: true, // if we want to load AdminDashboard for both /admin and /admin/dashboard routes
-      //     element: <AdminDashboard />,
-      //   },
-      {
-        path: "dashboard",
-        element: <AdminDashboard />,
-      },
-      {
-        path: "create-student",
-        element: <CreateStudent />,
-      },
-    ],
+    children: adminPaths,
+  },
+  {
+    path: "/faculty",
+    element: <App />,
+    children: adminPaths,
+  },
+  {
+    path: "/student",
+    element: <App />,
+    children: adminPaths,
   },
   {
     path: "/login",
