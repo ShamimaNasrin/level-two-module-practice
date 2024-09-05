@@ -4,7 +4,7 @@ import CreateFaculty from "../pages/admin/CreateFaculty";
 import CreateStudent from "../pages/admin/CreateStudent";
 
 //combine array for route and side menu items
-const adminPaths2 = [
+const adminPaths = [
   {
     name: "Dashboard",
     path: "admin/dashboard",
@@ -32,26 +32,48 @@ const adminPaths2 = [
   },
 ];
 
-//plain route array
-export const adminPaths = [
-  {
-    index: true, // if we want to load AdminDashboard for both /admin and /admin/dashboard routes
-    element: <AdminDashboard />,
-  },
-  {
-    path: "dashboard", // if we want to load AdminDashboard for both /admin and /admin/dashboard routes
-    element: <AdminDashboard />,
-  },
-  {
-    path: "create-admin",
-    element: <CreateAdmin />,
-  },
-  {
-    path: "create-faculty",
-    element: <CreateFaculty />,
-  },
-  {
-    path: "create-student",
-    element: <CreateStudent />,
-  },
-];
+//* Programatical way
+export const adminRoutes = adminPaths.reduce((acc, item) => {
+  if (item.path && item.element) {
+    acc.push({
+      path: item.path,
+      element: item.element,
+    });
+  }
+
+  if (item.children) {
+    item.children.forEach((child) => {
+      acc.push({
+        path: child.path,
+        element: child.element,
+      });
+    });
+  }
+
+  return acc;
+}, []);
+
+//! Hard coded way
+
+// export const adminPaths = [
+//   {
+//     index: true, // if we want to load AdminDashboard for both /admin and /admin/dashboard routes
+//     element: <AdminDashboard />,
+//   },
+//   {
+//     path: "dashboard", // if we want to load AdminDashboard for both /admin and /admin/dashboard routes
+//     element: <AdminDashboard />,
+//   },
+//   {
+//     path: "create-admin",
+//     element: <CreateAdmin />,
+//   },
+//   {
+//     path: "create-faculty",
+//     element: <CreateFaculty />,
+//   },
+//   {
+//     path: "create-student",
+//     element: <CreateStudent />,
+//   },
+// ];
