@@ -1,8 +1,12 @@
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { Button } from "antd";
 import { useForm } from "react-hook-form";
+import { useAppDispatch } from "../redux/hooks";
+import { setUser } from "../redux/features/auth/authSlice";
+import { verifyToken } from "../utils/verifyToken";
 
 const Login = () => {
+  const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm({
     defaultValues: {
       userId: "A-0002",
@@ -12,12 +16,19 @@ const Login = () => {
 
   const [login, { error }] = useLoginMutation();
 
+  console.log("error:", error);
+
   const onSubmit = async (data) => {
-    console.log("data:", data);
+    // console.log("data:", data);
     const userInfo = {
       id: data.userId,
       password: data.password,
     };
+
+    const res = await login(userInfo).unwrap();
+    const user = verifyToken(res.data.accessToken);
+
+    dispatch(setUser({ user: user, token: res.data.accessToken }));
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
